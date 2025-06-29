@@ -48,36 +48,6 @@ const HowItWorks = () => {
             className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
             <FloatingShapes/>
 
-            {/* Navigation */}
-            <nav className="relative z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
-                <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-                    <Link to="/"
-                          className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                        TicketVerse
-                    </Link>
-
-                    <div className="hidden md:flex items-center space-x-8">
-                        <Link to="/events" className="hover:text-purple-300 transition-colors">Events</Link>
-                        <Link to="/how-it-works" className="text-purple-300">How It Works</Link>
-                        <Link to="/support" className="hover:text-purple-300 transition-colors">Support</Link>
-                    </div>
-
-                    <div className="flex items-center space-x-4">
-                        <Link to="/auth/login">
-                            <Button variant="ghost" className="text-white hover:bg-white/10">
-                                Login
-                            </Button>
-                        </Link>
-                        <Link to="/auth/register">
-                            <Button
-                                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
-                                Get Started
-                            </Button>
-                        </Link>
-                    </div>
-                </div>
-            </nav>
-
             <div className="relative z-10 py-20 px-4">
                 <div className="container mx-auto">
                     <div className="text-center mb-16">

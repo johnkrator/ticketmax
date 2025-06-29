@@ -58,7 +58,8 @@ interface ScanResult {
 
 const Dashboard: React.FC = () => {
     // Mock user data
-    const [user] = useState<User>({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_user] = useState<User>({
         id: "user123",
         name: "John Doe",
         email: "john@example.com"
@@ -453,22 +454,6 @@ const Dashboard: React.FC = () => {
                 <div
                     className="absolute bottom-20 left-32 w-24 h-24 bg-blue-500/20 rounded-full blur-xl animate-pulse delay-2000"></div>
             </div>
-
-            {/* Navigation */}
-            <nav className="relative z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
-                <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-                    <Link to="/"
-                          className="text-2xl cursor-pointer font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                        TicketMax
-                    </Link>
-                    <div className="flex items-center space-x-4">
-                        <span className="text-gray-300">Welcome, {user.name}</span>
-                        <Button variant="ghost" className="text-white cursor-pointer hover:bg-white/10">
-                            Logout
-                        </Button>
-                    </div>
-                </div>
-            </nav>
 
             <div className="relative z-10 py-8 px-4">
                 <div className="container mx-auto">
