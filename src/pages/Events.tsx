@@ -166,7 +166,7 @@ const Events = () => {
                                                 {event.price}
                                             </div>
                                             <Button
-                                                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+                                                className="bg-gradient-to-r cursor-pointer from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     handleBookNow(event.id);

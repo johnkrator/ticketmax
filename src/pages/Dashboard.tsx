@@ -157,7 +157,7 @@ const Dashboard = () => {
                                 <CardTitle className="text-2xl font-bold text-white">My Tickets</CardTitle>
                                 <Link to="/events">
                                     <Button size="sm"
-                                            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
+                                            className="bg-gradient-to-r cursor-pointer from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
                                         Browse Events
                                     </Button>
                                 </Link>
@@ -186,7 +186,7 @@ const Dashboard = () => {
                                 <CardTitle className="text-2xl font-bold text-white">My Events</CardTitle>
                                 <Link to="/events/create">
                                     <Button size="sm"
-                                            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
+                                            className="bg-gradient-to-r cursor-pointer from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
                                         <Plus className="h-4 w-4 mr-2"/>
                                         Create Event
                                     </Button>
@@ -199,13 +199,13 @@ const Dashboard = () => {
                                             <h4 className="font-semibold text-white">{event.title}</h4>
                                             <div className="flex space-x-2">
                                                 <Button size="sm" variant="ghost"
-                                                        className="text-blue-400 hover:bg-blue-500/20">
+                                                        className="text-blue-400 hover:bg-blue-500/20 hover:text-white cursor-pointer">
                                                     <Edit3 className="h-4 w-4"/>
                                                 </Button>
                                                 <Button
                                                     size="sm"
                                                     variant="ghost"
-                                                    className="text-red-400 hover:bg-red-500/20"
+                                                    className="text-red-400 hover:bg-red-500/20 hover:text-white cursor-pointer"
                                                     onClick={() => handleDeleteEvent(event.id)}
                                                 >
                                                     <Trash2 className="h-4 w-4"/>

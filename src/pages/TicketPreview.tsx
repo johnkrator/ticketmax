@@ -23,11 +23,10 @@ interface Event {
     time: string;
     location: string;
     image: string;
-    price: number;
+    price: string;
     category: string;
     description: string;
     organizer: string;
-    ticketTypes: TicketType[];
 }
 
 const TicketPreview = () => {
@@ -35,12 +34,41 @@ const TicketPreview = () => {
     const navigate = useNavigate();
     const [selectedTickets, setSelectedTickets] = useState<Record<string, number>>({});
     const [event, setEvent] = useState<Event | null>(null);
+    const [ticketTypes, setTicketTypes] = useState<TicketType[]>([]);
 
     useEffect(() => {
-        const state = location.state as { event: Event; selectedTickets: Record<string, number> } | null;
+        const state = location.state as {
+            event: Event;
+            selectedTickets: Record<string, number>;
+            ticketTypes?: TicketType[]
+        } | null;
         if (state) {
             setEvent(state.event);
             setSelectedTickets(state.selectedTickets);
+
+            // If ticketTypes are passed, use them, otherwise create default ones
+            if (state.ticketTypes) {
+                setTicketTypes(state.ticketTypes);
+            } else {
+                // Create default ticket types based on event price
+                const defaultTicketTypes = [
+                    {
+                        id: "general",
+                        name: "General Admission",
+                        price: parseInt(state.event.price.replace("$", "")),
+                        description: "Access to all stages and general event areas",
+                        available: 500,
+                    },
+                    {
+                        id: "vip",
+                        name: "VIP Experience",
+                        price: parseInt(state.event.price.replace("$", "")) * 2,
+                        description: "Premium experience with exclusive perks",
+                        available: 50,
+                    }
+                ];
+                setTicketTypes(defaultTicketTypes);
+            }
         } else {
             // Redirect back to events if no state
             navigate("/events");
@@ -63,9 +91,9 @@ const TicketPreview = () => {
     };
 
     const getTotalPrice = () => {
-        if (!event || !event.ticketTypes) return 0;
+        if (!ticketTypes.length) return 0;
         return Object.entries(selectedTickets).reduce((total, [ticketId, quantity]) => {
-            const ticket = event.ticketTypes.find(t => t.id === ticketId);
+            const ticket = ticketTypes.find(t => t.id === ticketId);
             return total + (ticket ? ticket.price * quantity : 0);
         }, 0);
     };
@@ -90,7 +118,8 @@ const TicketPreview = () => {
         });
     };
 
-    if (!event || !event.ticketTypes) {
+    // Show loading only if we don't have event data
+    if (!event) {
         return (
             <div
                 className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white flex items-center justify-center">
@@ -156,46 +185,59 @@ const TicketPreview = () => {
                                 <div className="space-y-4">
                                     <div>
                                         <h3 className="text-lg font-semibold text-white mb-2">Selected Tickets</h3>
-                                        {Object.entries(selectedTickets).map(([ticketId, quantity]) => {
-                                            const ticket = event.ticketTypes?.find(t => t.id === ticketId);
-                                            if (!ticket || quantity === 0) return null;
+                                        {Object.entries(selectedTickets).length === 0 ? (
+                                            <div className="text-center py-8 text-gray-400">
+                                                <p>No tickets selected yet.</p>
+                                                <Button
+                                                    variant="outline"
+                                                    onClick={() => navigate(-1)}
+                                                    className="mt-4 border-white/20 text-white hover:bg-white/10"
+                                                >
+                                                    Go Back to Select Tickets
+                                                </Button>
+                                            </div>
+                                        ) : (
+                                            Object.entries(selectedTickets).map(([ticketId, quantity]) => {
+                                                const ticket = ticketTypes.find(t => t.id === ticketId);
+                                                if (!ticket || quantity === 0) return null;
 
-                                            return (
-                                                <div key={ticketId}
-                                                     className="flex items-center justify-between p-4 bg-white/5 rounded-lg">
-                                                    <div className="flex-1">
-                                                        <h4 className="font-medium text-white">{ticket.name}</h4>
-                                                        <p className="text-sm text-gray-400">{ticket.description}</p>
-                                                        <p className="text-lg font-bold text-purple-400">${ticket.price}</p>
+                                                return (
+                                                    <div key={ticketId}
+                                                         className="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+                                                        <div className="flex-1">
+                                                            <h4 className="font-medium text-white">{ticket.name}</h4>
+                                                            <p className="text-sm text-gray-400">{ticket.description}</p>
+                                                            <p className="text-lg font-bold text-purple-400">${ticket.price}</p>
+                                                        </div>
+
+                                                        <div className="flex items-center gap-3">
+                                                            <Button
+                                                                variant="outline"
+                                                                size="sm"
+                                                                onClick={() => updateTicketQuantity(ticketId, -1)}
+                                                                className="h-8 w-8 p-0 border-white/20 hover:bg-white/10"
+                                                            >
+                                                                <Minus className="h-4 w-4"/>
+                                                            </Button>
+
+                                                            <p className="text-white font-medium w-8 text-center">
+                                                                {quantity}
+                                                            </p>
+
+                                                            <Button
+                                                                variant="outline"
+                                                                size="sm"
+                                                                onClick={() => updateTicketQuantity(ticketId, 1)}
+                                                                className="h-8 w-8 p-0 border-white/20 hover:bg-white/10"
+                                                                disabled={quantity >= ticket.available}
+                                                            >
+                                                                <Plus className="h-4 w-4"/>
+                                                            </Button>
+                                                        </div>
                                                     </div>
-
-                                                    <div className="flex items-center gap-3">
-                                                        <Button
-                                                            variant="outline"
-                                                            size="sm"
-                                                            onClick={() => updateTicketQuantity(ticketId, -1)}
-                                                            className="h-8 w-8 p-0 border-white/20 hover:bg-white/10"
-                                                        >
-                                                            <Minus className="h-4 w-4"/>
-                                                        </Button>
-
-                                                        <span className="text-white font-medium w-8 text-center">
-                              {quantity}
-                            </span>
-
-                                                        <Button
-                                                            variant="outline"
-                                                            size="sm"
-                                                            onClick={() => updateTicketQuantity(ticketId, 1)}
-                                                            className="h-8 w-8 p-0 border-white/20 hover:bg-white/10"
-                                                            disabled={quantity >= ticket.available}
-                                                        >
-                                                            <Plus className="h-4 w-4"/>
-                                                        </Button>
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
+                                                );
+                                            })
+                                        )}
                                     </div>
                                 </div>
                             </CardContent>
@@ -212,7 +254,7 @@ const TicketPreview = () => {
                             <CardContent className="space-y-4">
                                 <div className="space-y-2">
                                     {Object.entries(selectedTickets).map(([ticketId, quantity]) => {
-                                        const ticket = event.ticketTypes?.find(t => t.id === ticketId);
+                                        const ticket = ticketTypes.find(t => t.id === ticketId);
                                         if (!ticket || quantity === 0) return null;
 
                                         return (
@@ -244,7 +286,7 @@ const TicketPreview = () => {
 
                                 <Button
                                     onClick={handleProceedToPayment}
-                                    className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3"
+                                    className="w-full bg-gradient-to-r cursor-pointer from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3"
                                     disabled={getTotalTickets() === 0}
                                 >
                                     Proceed to Payment

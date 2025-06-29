@@ -321,7 +321,7 @@ const CreateEvent = () => {
                                     <Button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3"
+                                        className="flex-1 bg-gradient-to-r cursor-pointer from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3"
                                     >
                                         {isSubmitting ? "Creating Event..." : "Create Event"}
                                     </Button>
@@ -329,7 +329,7 @@ const CreateEvent = () => {
                                         type="button"
                                         variant="outline"
                                         onClick={() => navigate("/dashboard")}
-                                        className="flex-1 border-white/30 text-white hover:bg-white/10"
+                                        className="flex-1 border-white/30 text-[#561888] hover:text-white cursor-pointer hover:bg-white/10"
                                     >
                                         Cancel
                                     </Button>

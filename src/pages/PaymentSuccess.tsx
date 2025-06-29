@@ -116,7 +116,7 @@ const PaymentSuccess = () => {
                             Redirecting to your dashboard in 15 seconds...
                         </p>
                         <Link to="/dashboard">
-                            <Button variant="ghost" className="text-purple-300 hover:text-white">
+                            <Button variant="ghost" className="text-purple-300 cursor-pointer hover:text-[#561888]">
                                 Go to Dashboard Now
                             </Button>
                         </Link>

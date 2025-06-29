@@ -202,7 +202,7 @@ const Payment = () => {
                                     <Button
                                         type="submit"
                                         disabled={isProcessing}
-                                        className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 text-lg"
+                                        className="w-full bg-gradient-to-r cursor-pointer from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 text-lg"
                                     >
                                         {isProcessing ? "Processing Payment..." : `Pay $${bookingDetails.totalPrice}`}
                                     </Button>

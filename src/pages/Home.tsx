@@ -28,13 +28,14 @@ const Home = () => {
 
                     <div className="flex items-center space-x-4">
                         <Link to="/auth/login">
-                            <Button variant="ghost" className="text-white hover:bg-white/10">
+                            <Button variant="ghost"
+                                    className="text-white cursor-pointer hover:text-white hover:bg-white/10">
                                 Login
                             </Button>
                         </Link>
                         <Link to="/auth/register">
                             <Button
-                                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
+                                className="bg-gradient-to-r from-purple-600 to-pink-600 cursor-pointer hover:from-purple-700 hover:to-pink-700">
                                 Get Started
                             </Button>
                         </Link>

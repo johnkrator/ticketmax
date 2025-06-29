@@ -204,7 +204,7 @@ const EventDetails = () => {
                         {/* Ticket Selection */}
                         <div className="space-y-6">
                             <Card className="bg-white/5 backdrop-blur-md border-white/10 sticky top-4">
-                                <CardContent className="p-6">
+                                <CardContent className="flex flex-col gap-5 p-6">
                                     <h3 className="text-2xl font-bold text-white mb-6">Select Tickets</h3>
 
                                     <div className="space-y-4">
@@ -223,19 +223,19 @@ const EventDetails = () => {
                                                             variant="outline"
                                                             onClick={() => updateTicketQuantity(ticket.id, -1)}
                                                             disabled={!selectedTickets[ticket.id]}
-                                                            className="border-white/20 text-white hover:bg-white/10"
+                                                            className="border-white/20 text-[#561888] cursor-pointer hover:bg-white/10"
                                                         >
                                                             <Minus className="h-4 w-4"/>
                                                         </Button>
-                                                        <span className="w-8 text-center text-white font-semibold">
-                              {selectedTickets[ticket.id] || 0}
-                            </span>
+                                                        <p className="w-8 text-center text-white font-semibold">
+                                                            {selectedTickets[ticket.id] || 0}
+                                                        </p>
                                                         <Button
                                                             size="sm"
                                                             variant="outline"
                                                             onClick={() => updateTicketQuantity(ticket.id, 1)}
                                                             disabled={(selectedTickets[ticket.id] || 0) >= 10}
-                                                            className="border-white/20 text-white hover:bg-white/10"
+                                                            className="border-white/20 text-[#561888] cursor-pointer hover:bg-white/10"
                                                         >
                                                             <Plus className="h-4 w-4"/>
                                                         </Button>
@@ -271,7 +271,7 @@ const EventDetails = () => {
 
                                     <Button
                                         onClick={handleBookNow}
-                                        className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 text-lg"
+                                        className="w-full bg-gradient-to-r cursor-pointer from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 text-lg"
                                     >
                                         <Ticket className="h-5 w-5 mr-2"/>
                                         {getTotalTickets() > 0 ? `Book ${getTotalTickets()} Ticket(s)` : "Select Tickets"}

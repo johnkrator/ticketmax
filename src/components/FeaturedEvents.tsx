@@ -81,7 +81,7 @@ const FeaturedEvents = () => {
                                         </div>
                                         <Button
                                             size="sm"
-                                            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+                                            className="bg-gradient-to-r cursor-pointer from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 handleBookNow(event.id);
@@ -102,7 +102,7 @@ const FeaturedEvents = () => {
                         <Button
                             size="lg"
                             variant="outline"
-                            className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg rounded-full"
+                            className="border-white/30 text-[#561888] hover:text-white cursor-pointer hover:bg-white/10 px-8 py-4 text-lg rounded-full"
                         >
                             View All Events
                         </Button>
