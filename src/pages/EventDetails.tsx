@@ -101,7 +101,7 @@ const EventDetails = () => {
                 <div className="container mx-auto px-4 py-4 flex items-center justify-between">
                     <Link to="/"
                           className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                        TicketVerse
+                        TicketMax
                     </Link>
 
                     <div className="flex items-center space-x-4">
