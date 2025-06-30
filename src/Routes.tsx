@@ -13,7 +13,6 @@ import TicketPreview from "@/pages/TicketPreview.tsx";
 import Payment from "@/pages/Payment.tsx";
 import PaymentSuccess from "@/pages/PaymentSuccess.tsx";
 import Dashboard from "@/pages/Dashboard.tsx";
-import TicketVerification from "@/pages/TicketVerification.tsx";
 
 const Routes = () => {
     return createBrowserRouter([
@@ -38,7 +37,6 @@ const Routes = () => {
                 {path: "payment", element: <Payment/>},
                 {path: "payment/success", element: <PaymentSuccess/>},
                 {path: "dashboard", element: <Dashboard/>},
-                {path: "verify-tickets", element: <TicketVerification/>},
 
                 // Only registered users routes
                 // {
