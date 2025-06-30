@@ -13,12 +13,16 @@ import {
     CheckCircle,
     XCircle,
     Camera,
+    FileImage,
+    FileText,
+    ChevronDown,
 } from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
 import {QRCodeGenerator} from "@/components/QRCodeGenerator.tsx";
 import {TicketTemplate} from "@/components/TicketTemplate.tsx";
+import {Link} from "react-router-dom";
 
 interface UserTicket {
     id: number;
@@ -52,9 +56,73 @@ interface ScanResult {
     error?: string;
 }
 
+// Custom Dropdown Component (fallback if shadcn dropdown doesn't work)
+interface CustomDropdownProps {
+    trigger: React.ReactNode;
+    children: React.ReactNode;
+    isOpen: boolean;
+    onToggle: () => void;
+}
+
+const CustomDropdown: React.FC<CustomDropdownProps> = ({trigger, children, isOpen, onToggle}) => {
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                onToggle();
+            }
+        };
+
+        if (isOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isOpen, onToggle]);
+
+    return (
+        <div className="relative" ref={dropdownRef}>
+            <div onClick={onToggle}>{trigger}</div>
+            {isOpen && (
+                <div
+                    className="absolute right-0 top-full mt-1 z-50 min-w-[160px] rounded-md border border-slate-700 bg-slate-800 p-1 shadow-lg">
+                    {children}
+                </div>
+            )}
+        </div>
+    );
+};
+
+interface CustomDropdownItemProps {
+    onClick: () => void;
+    disabled?: boolean;
+    children: React.ReactNode;
+}
+
+const CustomDropdownItem: React.FC<CustomDropdownItemProps> = ({onClick, disabled = false, children}) => {
+    return (
+        <button
+            onClick={disabled ? undefined : onClick}
+            disabled={disabled}
+            className={`w-full text-left px-2 py-1.5 text-sm rounded-sm transition-colors ${
+                disabled
+                    ? "opacity-50 cursor-not-allowed text-gray-400"
+                    : "text-white hover:bg-slate-700 focus:bg-slate-700 cursor-pointer"
+            }`}
+        >
+            {children}
+        </button>
+    );
+};
+
 const Dashboard: React.FC = () => {
     const [isScanning, setIsScanning] = useState<boolean>(false);
     const [scanResult, setScanResult] = useState<ScanResult | null>(null);
+    const [downloadingTickets, setDownloadingTickets] = useState<Set<number>>(new Set());
+    const [openDropdowns, setOpenDropdowns] = useState<Set<number>>(new Set());
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [userTickets] = useState<UserTicket[]>([
@@ -125,19 +193,62 @@ const Dashboard: React.FC = () => {
         setUserEvents(userEvents.filter((event) => event.id !== eventId));
     };
 
-    // Download ticket using the separated components
-    const downloadTicket = async (ticket: UserTicket): Promise<void> => {
+    const toggleDropdown = (ticketId: number) => {
+        setOpenDropdowns((prev) => {
+            const newSet = new Set(prev);
+            if (newSet.has(ticketId)) {
+                newSet.delete(ticketId);
+            } else {
+                newSet.clear(); // Close other dropdowns
+                newSet.add(ticketId);
+            }
+            return newSet;
+        });
+    };
+
+    const closeDropdown = (ticketId: number) => {
+        setOpenDropdowns((prev) => {
+            const newSet = new Set(prev);
+            newSet.delete(ticketId);
+            return newSet;
+        });
+    };
+
+    // Download ticket as PDF
+    const downloadTicketAsPDF = async (ticket: UserTicket): Promise<void> => {
         try {
-            // Generate QR code using the QRCodeGenerator component
+            closeDropdown(ticket.id);
+            setDownloadingTickets((prev) => new Set(prev).add(ticket.id));
             const qrCodeDataUrl = await QRCodeGenerator.generate(ticket.qrData, 200);
-
-            // Generate ticket HTML using the TicketTemplate component
-            const ticketHTML = TicketTemplate.generate(ticket, qrCodeDataUrl);
-
-            // Download the ticket using the TicketTemplate download method
-            TicketTemplate.downloadTicket(ticket, ticketHTML);
+            await TicketTemplate.downloadAsPDF(ticket, qrCodeDataUrl);
         } catch (err) {
-            console.error("Error generating ticket:", err);
+            console.error("Error generating PDF ticket:", err);
+            alert("Error generating PDF ticket. Please try again.");
+        } finally {
+            setDownloadingTickets((prev) => {
+                const newSet = new Set(prev);
+                newSet.delete(ticket.id);
+                return newSet;
+            });
+        }
+    };
+
+    // Download ticket as JPEG
+    const downloadTicketAsJPEG = async (ticket: UserTicket): Promise<void> => {
+        try {
+            closeDropdown(ticket.id);
+            setDownloadingTickets((prev) => new Set(prev).add(ticket.id));
+            const qrCodeDataUrl = await QRCodeGenerator.generate(ticket.qrData, 200);
+            await TicketTemplate.downloadAsJPEG(ticket, qrCodeDataUrl);
+        } catch (err) {
+            console.error("Error generating JPEG ticket:", err);
+            alert("Error generating JPEG ticket. Please try again.");
+        } finally {
+            setDownloadingTickets((prev) => {
+                const newSet = new Set(prev);
+                newSet.delete(ticket.id);
+                return newSet;
+            });
         }
     };
 
@@ -310,12 +421,14 @@ const Dashboard: React.FC = () => {
                         <Card className="bg-white/5 backdrop-blur-md border-white/10">
                             <CardHeader className="flex flex-row items-center justify-between">
                                 <CardTitle className="text-2xl font-bold text-white">My Tickets</CardTitle>
-                                <Button
-                                    size="sm"
-                                    className="bg-gradient-to-r cursor-pointer from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
-                                >
-                                    Browse Events
-                                </Button>
+                                <Link to="/events">
+                                    <Button
+                                        size="sm"
+                                        className="bg-gradient-to-r cursor-pointer from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+                                    >
+                                        Browse Events
+                                    </Button>
+                                </Link>
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 {userTickets.map((ticket) => (
@@ -331,14 +444,41 @@ const Dashboard: React.FC = () => {
                                             {ticket.quantity} x {ticket.ticketType} Ticket(s)
                                         </p>
                                         <div className="flex space-x-2">
-                                            <Button
-                                                size="sm"
-                                                onClick={() => downloadTicket(ticket)}
-                                                className="bg-[#4f3580] cursor-pointer hover:bg-[#4f3580] text-white flex-1"
+                                            {/* Custom Dropdown Implementation */}
+                                            <CustomDropdown
+                                                isOpen={openDropdowns.has(ticket.id)}
+                                                onToggle={() => toggleDropdown(ticket.id)}
+                                                trigger={
+                                                    <Button
+                                                        size="sm"
+                                                        disabled={downloadingTickets.has(ticket.id)}
+                                                        className="bg-[#4f3580] hover:bg-[#6a4a99] focus:bg-[#6a4a99] text-white flex-1 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    >
+                                                        <Download className="h-4 w-4 mr-2"/>
+                                                        {downloadingTickets.has(ticket.id) ? "Generating..." : "Download"}
+                                                        <ChevronDown className="h-4 w-4 ml-2"/>
+                                                    </Button>
+                                                }
                                             >
-                                                <Download className="h-4 w-4 mr-2"/>
-                                                Download
-                                            </Button>
+                                                <CustomDropdownItem
+                                                    onClick={() => downloadTicketAsPDF(ticket)}
+                                                    disabled={downloadingTickets.has(ticket.id)}
+                                                >
+                                                    <div className="flex items-center">
+                                                        <FileText className="h-4 w-4 mr-2"/>
+                                                        Download as PDF
+                                                    </div>
+                                                </CustomDropdownItem>
+                                                <CustomDropdownItem
+                                                    onClick={() => downloadTicketAsJPEG(ticket)}
+                                                    disabled={downloadingTickets.has(ticket.id)}
+                                                >
+                                                    <div className="flex items-center">
+                                                        <FileImage className="h-4 w-4 mr-2"/>
+                                                        Download as JPEG
+                                                    </div>
+                                                </CustomDropdownItem>
+                                            </CustomDropdown>
                                         </div>
                                     </div>
                                 ))}
@@ -392,10 +532,10 @@ const Dashboard: React.FC = () => {
                                                 ) : (
                                                     <XCircle className="h-6 w-6 text-red-400"/>
                                                 )}
-                                                <div
+                                                <span
                                                     className={`font-semibold ${scanResult.valid ? "text-green-400" : "text-red-400"}`}>
-                                                    {scanResult.valid ? "Valid Ticket" : "Invalid Ticket"}
-                                                </div>
+                          {scanResult.valid ? "Valid Ticket" : "Invalid Ticket"}
+                        </span>
                                             </div>
 
                                             {scanResult.valid && scanResult.ticketNumber && (
@@ -437,13 +577,15 @@ const Dashboard: React.FC = () => {
                         <Card className="bg-white/5 backdrop-blur-md border-white/10">
                             <CardHeader className="flex flex-row items-center justify-between">
                                 <CardTitle className="text-2xl font-bold text-white">My Events</CardTitle>
-                                <Button
-                                    size="sm"
-                                    className="bg-gradient-to-r cursor-pointer from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
-                                >
-                                    <Plus className="h-4 w-4 mr-2"/>
-                                    Create Event
-                                </Button>
+                                <Link to="/events/create">
+                                    <Button
+                                        size="sm"
+                                        className="bg-gradient-to-r cursor-pointer from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+                                    >
+                                        <Plus className="h-4 w-4 mr-2"/>
+                                        Create Event
+                                    </Button>
+                                </Link>
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 {userEvents.map((event) => (
@@ -472,12 +614,11 @@ const Dashboard: React.FC = () => {
                                             {event.date} • {event.location}
                                         </p>
                                         <div className="flex justify-between text-sm">
-                                            <div className="text-gray-400">
-                                                {event.ticketsSold}/{event.totalTickets} tickets sold
-                                            </div>
-                                            <div
-                                                className="text-green-400 font-semibold">${event.revenue} revenue
-                                            </div>
+                      <span className="text-gray-400">
+                        {event.ticketsSold}/{event.totalTickets} tickets sold
+                      </span>
+                                            <span
+                                                className="text-green-400 font-semibold">${event.revenue} revenue</span>
                                         </div>
                                     </div>
                                 ))}
