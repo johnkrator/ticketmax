@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {ArrowRight, Search, Calendar} from "lucide-react";
 import {Button} from "@/components/ui/button";
@@ -74,7 +74,7 @@ const HeroSection = () => {
                         </Button>
                     </Link>
 
-                    <Link to="/events/create">
+                    <Link to="/auth/login">
                         <Button
                             variant="outline"
                             size="lg"
