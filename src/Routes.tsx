@@ -13,6 +13,8 @@ import TicketPreview from "@/pages/TicketPreview.tsx";
 import Payment from "@/pages/Payment.tsx";
 import PaymentSuccess from "@/pages/PaymentSuccess.tsx";
 import Dashboard from "@/pages/Dashboard.tsx";
+import VerificationPending from "@/pages/VerificationPending.tsx";
+import OrganizerOnboarding from "@/pages/OrganizerOnboarding.tsx";
 
 const Routes = () => {
     return createBrowserRouter([
@@ -33,6 +35,8 @@ const Routes = () => {
                 {path: "support", element: <Support/>},
                 {path: "auth/login", element: <Login/>},
                 {path: "auth/register", element: <Register/>},
+                {path: "auth/organizer-onboarding", element: <OrganizerOnboarding/>},
+                {path: "auth/verification-pending", element: <VerificationPending/>},
                 {path: "ticket-preview", element: <TicketPreview/>},
                 {path: "payment", element: <Payment/>},
                 {path: "payment/success", element: <PaymentSuccess/>},

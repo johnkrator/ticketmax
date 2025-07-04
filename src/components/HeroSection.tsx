@@ -74,7 +74,7 @@ const HeroSection = () => {
                         </Button>
                     </Link>
 
-                    <Link to="/auth/login">
+                    <Link to="/auth/organizer-onboarding">
                         <Button
                             variant="outline"
                             size="lg"
