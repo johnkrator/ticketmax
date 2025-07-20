@@ -18,7 +18,7 @@ const Layout = () => {
             <main className="flex-1 relative z-10">
                 <Outlet/>
             </main>
-            <Footer className="relative z-10"/>
+            <Footer/>
         </div>
     );
 };

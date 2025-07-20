@@ -56,7 +56,7 @@ const Register = () => {
             toast.success("Account created successfully! Welcome to TicketVerse!");
             navigate("/dashboard");
         } catch (error) {
-            const axiosError = error as AxiosError;
+            const axiosError = error as AxiosError<{ message: string }>;
             toast.error(axiosError.response?.data?.message || "Registration failed. Please try again.");
         }
     };
