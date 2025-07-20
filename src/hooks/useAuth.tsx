@@ -1,5 +1,5 @@
 import {useAuthStore} from "../stores/authStore";
-import {UserRole} from "../types/api";
+import {UserRole} from "@/api/types/api";
 import {useEffect} from "react";
 
 export const useAuth = () => {
