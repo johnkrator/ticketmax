@@ -12,7 +12,6 @@ import type {
     ResetPasswordDto, UpdateUserDto, User
 } from "@/state/api/types/api.ts";
 
-// Define the error response type locally to match api.ts
 interface AxiosErrorResponse {
     response?: {
         data: ApiError;
@@ -158,7 +157,7 @@ export const useAuthStore = create<AuthState>()(
             resendVerificationCode: async (email: string) => {
                 set({isLoading: true, error: null});
                 try {
-                    const response = await api.post<ApiResponse>("/user/resend-verification-code", {email});
+                    const response = await api.post<ApiResponse>("/user/resend-verification", {email});
                     set({isLoading: false});
                     return response.data;
                 } catch (error) {
