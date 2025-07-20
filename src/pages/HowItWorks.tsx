@@ -2,7 +2,6 @@ import {Search, Ticket, Calendar, QrCode, Users, Shield, Clock, Star} from "luci
 import {Card, CardContent} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import {Link} from "react-router-dom";
-import FloatingShapes from "@/components/FloatingShapes";
 
 const HowItWorks = () => {
     const steps = [
@@ -45,9 +44,7 @@ const HowItWorks = () => {
 
     return (
         <div
-            className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
-            <FloatingShapes/>
-
+            className="min-h-screen bg-app-gradient text-white relative overflow-hidden">
             <div className="relative z-10 py-20 px-4">
                 <div className="container mx-auto">
                     <div className="text-center mb-16">

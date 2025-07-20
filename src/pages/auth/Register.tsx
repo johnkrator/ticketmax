@@ -5,7 +5,9 @@ import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {toast} from "sonner";
-import FloatingShapes from "@/components/FloatingShapes";
+import {useAuth} from "@/hooks/useAuth";
+import {UserRole} from "@/types/api";
+import {AxiosError} from "axios";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -18,7 +20,8 @@ const Register = () => {
     });
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+
+    const {register, isLoading, error, clearError} = useAuth();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
@@ -29,6 +32,7 @@ const Register = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        clearError();
 
         if (formData.password !== formData.confirmPassword) {
             toast.error("Passwords do not match");
@@ -40,24 +44,28 @@ const Register = () => {
             return;
         }
 
-        setIsLoading(true);
+        try {
+            await register({
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: formData.email,
+                password: formData.password,
+                role: UserRole.USER
+            });
 
-        // Simulate registration process
-        setTimeout(() => {
-            setIsLoading(false);
             toast.success("Account created successfully! Welcome to TicketVerse!");
-            // Redirect to dashboard after successful registration
             navigate("/dashboard");
-        }, 1500);
+        } catch (error) {
+            const axiosError = error as AxiosError;
+            toast.error(axiosError.response?.data?.message || "Registration failed. Please try again.");
+        }
     };
 
     return (
         <div
-            className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white relative overflow-hidden flex items-center justify-center py-8">
-            <FloatingShapes/>
-
+            className="min-h-screen bg-app-gradient text-white relative overflow-hidden flex items-center justify-center py-8">
             <div className="relative z-10 w-full max-w-md px-4">
-                <Card className="bg-white/5 backdrop-blur-md border-white/10">
+                <Card className="bg-app-glass">
                     <CardHeader className="text-center">
                         <Link to="/"
                               className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4 inline-block">
@@ -69,6 +77,12 @@ const Register = () => {
 
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-4">
+                            {error && (
+                                <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
+                                    <p className="text-red-300 text-sm">{error}</p>
+                                </div>
+                            )}
+
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <label htmlFor="firstName" className="text-sm font-medium text-gray-300">

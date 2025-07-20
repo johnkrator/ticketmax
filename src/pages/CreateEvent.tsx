@@ -6,7 +6,6 @@ import {Input} from "@/components/ui/input";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {toast} from "sonner";
 import {useEvents} from "@/contexts/EventsContext";
-import FloatingShapes from "@/components/FloatingShapes";
 
 const CreateEvent = () => {
     const navigate = useNavigate();
@@ -91,9 +90,7 @@ const CreateEvent = () => {
 
     return (
         <div
-            className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
-            <FloatingShapes/>
-
+            className="min-h-screen bg-app-gradient text-white relative overflow-hidden">
             <div className="relative z-10 py-8 px-4">
                 <div className="container mx-auto max-w-4xl">
                     <Link to="/dashboard"

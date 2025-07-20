@@ -1,39 +1,52 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {Eye, EyeOff, Mail, Lock} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {toast} from "sonner";
-import FloatingShapes from "@/components/FloatingShapes";
+import {useAuth} from "@/hooks/useAuth";
+import {AxiosError} from "axios";
+import type {ApiError} from "@/types/api.ts";
+
+// Define the error response type locally to avoid circular dependency
+interface AxiosErrorResponse {
+    response?: {
+        data: ApiError;
+        status: number;
+        statusText: string;
+    };
+    message: string;
+    code?: string;
+}
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+
+    const {login, isLoading, error, clearError} = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsLoading(true);
+        clearError();
 
-        // Simulate login process
-        setTimeout(() => {
-            setIsLoading(false);
+        try {
+            await login({email, password});
             toast.success("Login successful! Welcome back!");
-            // Redirect to dashboard after successful login
             navigate("/dashboard");
-        }, 1500);
+        } catch (error) {
+            const axiosError = error as AxiosError<AxiosErrorResponse>;
+            toast.error(axiosError.response?.data?.message || "Login failed. Please try again.");
+        }
     };
 
     return (
         <div
-            className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white relative overflow-hidden flex items-center justify-center">
-            <FloatingShapes/>
-
+            className="min-h-screen bg-app-gradient text-white relative overflow-hidden flex items-center justify-center">
             <div className="relative z-10 w-full max-w-md px-4">
-                <Card className="bg-white/5 backdrop-blur-md border-white/10">
+                <Card className="bg-app-glass">
                     <CardHeader className="text-center">
                         <Link to="/"
                               className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4 inline-block">
@@ -45,6 +58,12 @@ const Login = () => {
 
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-4">
+                            {error && (
+                                <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
+                                    <p className="text-red-300 text-sm">{error}</p>
+                                </div>
+                            )}
+
                             <div className="space-y-2">
                                 <label htmlFor="email" className="text-sm font-medium text-gray-300">
                                     Email

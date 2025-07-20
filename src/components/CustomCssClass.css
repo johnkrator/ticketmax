@@ -1,0 +1,16 @@
+/* Custom gradient classes */
+.gradient-primary {
+    @apply bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent;
+}
+
+.gradient-primary-bg {
+    @apply bg-gradient-to-r from-purple-400 to-pink-400;
+}
+
+.gradient-button {
+    @apply bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700;
+}
+
+.gradient-bg-light {
+    @apply bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent;
+}

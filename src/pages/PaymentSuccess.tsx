@@ -3,8 +3,7 @@ import {useLocation, useNavigate, Link} from "react-router-dom";
 import {CheckCircle, Ticket} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import FloatingShapes from "@/components/FloatingShapes";
-import TicketCard from "@/components/TicketCard";
+import TicketCard from "@/components/TicketCard.tsx";
 
 const PaymentSuccess = () => {
     const location = useLocation();
@@ -46,10 +45,9 @@ const PaymentSuccess = () => {
 
     return (
         <div
-            className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
-            <FloatingShapes/>
+            className="min-h-screen bg-app-gradient text-white relative overflow-hidden">
 
-            <div className="relative z-10 py-16 px-4">
+            <div className="relative z-10 py-8 px-4">
                 <div className="container mx-auto max-w-4xl">
                     <div className="text-center mb-8">
                         <CheckCircle className="h-24 w-24 text-green-400 mx-auto mb-6"/>
