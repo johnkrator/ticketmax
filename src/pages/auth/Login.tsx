@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import {Eye, EyeOff, Mail, Lock} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
@@ -25,8 +25,16 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
 
     const {login, isLoading, error, clearError} = useAuth();
+
+    // Display verification success message if coming from email verification
+    useEffect(() => {
+        if (location.state?.message) {
+            toast.success(location.state.message);
+        }
+    }, [location.state]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -35,7 +43,8 @@ const Login = () => {
         try {
             await login({email, password});
             toast.success("Login successful! Welcome back!");
-            navigate("/dashboard");
+            // Redirect to home page instead of dashboard
+            navigate("/");
         } catch (error) {
             const axiosError = error as AxiosError<AxiosErrorResponse>;
             toast.error(axiosError.response?.data?.message || "Login failed. Please try again.");

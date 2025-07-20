@@ -36,6 +36,8 @@ interface AuthState {
     login: (credentials: LoginDto) => Promise<AuthResponse>;
     logout: () => void;
     verifyEmail: (token: string) => Promise<ApiResponse>;
+    verifyEmailCode: (email: string, code: string) => Promise<ApiResponse>;
+    resendVerificationCode: (email: string) => Promise<ApiResponse>;
     forgotPassword: (email: ForgotPasswordDto) => Promise<ApiResponse>;
     resetPassword: (data: ResetPasswordDto) => Promise<ApiResponse>;
     changePassword: (data: ChangePasswordDto) => Promise<ApiResponse>;
@@ -129,6 +131,34 @@ export const useAuthStore = create<AuthState>()(
                 set({isLoading: true, error: null});
                 try {
                     const response = await api.post<ApiResponse>(`/user/verify-email/${token}`);
+                    set({isLoading: false});
+                    return response.data;
+                } catch (error) {
+                    const errorMessage = handleApiError(error as AxiosError<AxiosErrorResponse>);
+                    set({error: errorMessage, isLoading: false});
+                    throw error;
+                }
+            },
+
+            // Verify email code
+            verifyEmailCode: async (_email: string, code: string) => {
+                set({isLoading: true, error: null});
+                try {
+                    const response = await api.post<ApiResponse>(`/user/verify-email/${code}`);
+                    set({isLoading: false});
+                    return response.data;
+                } catch (error) {
+                    const errorMessage = handleApiError(error as AxiosError<AxiosErrorResponse>);
+                    set({error: errorMessage, isLoading: false});
+                    throw error;
+                }
+            },
+
+            // Resend verification code
+            resendVerificationCode: async (email: string) => {
+                set({isLoading: true, error: null});
+                try {
+                    const response = await api.post<ApiResponse>("/user/resend-verification-code", {email});
                     set({isLoading: false});
                     return response.data;
                 } catch (error) {

@@ -53,8 +53,10 @@ const Register = () => {
                 role: UserRole.USER
             });
 
-            toast.success("Account created successfully! Welcome to TicketVerse!");
-            navigate("/dashboard");
+            toast.success("Account created successfully! Please check your email for verification code.");
+            navigate("/auth/email-verification", {
+                state: {email: formData.email}
+            });
         } catch (error) {
             const axiosError = error as AxiosError<{ message: string }>;
             toast.error(axiosError.response?.data?.message || "Registration failed. Please try again.");
