@@ -15,6 +15,8 @@ import PaymentSuccess from "@/pages/PaymentSuccess.tsx";
 import Dashboard from "@/pages/Dashboard.tsx";
 import VerificationPending from "@/pages/VerificationPending.tsx";
 import OrganizerOnboarding from "@/pages/OrganizerOnboarding.tsx";
+import Profile from "@/pages/Profile.tsx";
+import BookingHistory from "@/pages/BookingHistory.tsx";
 
 const Routes = () => {
     return createBrowserRouter([
@@ -41,6 +43,8 @@ const Routes = () => {
                 {path: "payment", element: <Payment/>},
                 {path: "payment/success", element: <PaymentSuccess/>},
                 {path: "dashboard", element: <Dashboard/>},
+                {path: "profile", element: <Profile/>},
+                {path: "booking-history", element: <BookingHistory/>},
 
                 // Only registered users routes
                 // {
