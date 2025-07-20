@@ -6,16 +6,16 @@ import FloatingShapes from "@/components/FloatingShapes.tsx";
 
 const Layout = () => {
     const location = useLocation();
-    const isAuthRoute = location.pathname === "/auth/login" || location.pathname === "/auth/register";
+    const isAuthRoute = location.pathname === "/auth/login" || location.pathname === "/auth/register" || location.pathname === "/auth/email-verification";
 
     return (
-        <div className="flex flex-col min-h-screen relative overflow-hidden">
+        <div className="flex flex-col min-h-screen relative">
             {/* Global animated background shapes - ensure it's always visible */}
             <FloatingShapes/>
 
             <Sonner/>
             {!isAuthRoute && <Navbar/>}
-            <main className="flex-1 relative z-10">
+            <main className="flex-1 relative z-10 overflow-hidden">
                 <Outlet/>
             </main>
             <Footer/>
