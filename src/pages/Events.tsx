@@ -1,12 +1,12 @@
 import {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {Search, Calendar, MapPin, Users, Ticket} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Card, CardContent} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
-import {useEvents} from "@/contexts/EventsContext";
+import {useEvents} from "@/state/hooks/useEvents";
 
 const Events = () => {
     const navigate = useNavigate();

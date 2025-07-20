@@ -1,5 +1,5 @@
 import {AxiosError} from "axios";
-import type {ApiError} from "@/api/types/api.ts";
+import type {ApiError} from "@/state/api/types/api.ts";
 
 // Define the error response type locally to avoid circular dependency
 interface AxiosErrorResponse {

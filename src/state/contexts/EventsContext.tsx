@@ -1,36 +1,8 @@
-import {createContext, useContext, useState, type ReactNode} from "react";
-
-interface Event {
-    id: number;
-    title: string;
-    date: string;
-    time: string;
-    location: string;
-    price: string;
-    image: string;
-    category: string;
-    attendees: string;
-    featured: boolean;
-    description: string;
-}
-
-interface EventsContextType {
-    events: Event[];
-    addEvent: (event: Omit<Event, "id">) => void;
-}
-
-const EventsContext = createContext<EventsContextType | undefined>(undefined);
-
-export const useEvents = () => {
-    const context = useContext(EventsContext);
-    if (!context) {
-        throw new Error("useEvents must be used within an EventsProvider");
-    }
-    return context;
-};
+import {useState, type ReactNode} from "react";
+import {type EventItem, EventsContext} from "./EventsContextTypes.ts";
 
 export const EventsProvider = ({children}: { children: ReactNode }) => {
-    const [events, setEvents] = useState<Event[]>([
+    const [events, setEvents] = useState<EventItem[]>([
         {
             id: 1,
             title: "Summer Music Festival 2024",
@@ -111,7 +83,7 @@ export const EventsProvider = ({children}: { children: ReactNode }) => {
         }
     ]);
 
-    const addEvent = (newEvent: Omit<Event, "id">) => {
+    const addEvent = (newEvent: Omit<EventItem, "id">) => {
         const id = Math.max(...events.map(e => e.id)) + 1;
         setEvents(prev => [...prev, {...newEvent, id}]);
     };

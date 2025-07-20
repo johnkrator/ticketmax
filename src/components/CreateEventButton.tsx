@@ -2,7 +2,7 @@ import React from "react";
 import {useNavigate} from "react-router-dom";
 import {Plus} from "lucide-react";
 import {Button} from "@/components/ui/button";
-import {useAuth} from "@/hooks/useAuth";
+import {useAuth} from "@/state/hooks/useAuth";
 import {toast} from "sonner";
 import {handleCreateEventClick} from "@/components/checkOnboardingStatus.tsx";
 

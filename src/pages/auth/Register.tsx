@@ -5,8 +5,8 @@ import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {toast} from "sonner";
-import {useAuth} from "@/hooks/useAuth";
-import {UserRole} from "@/api/types/api";
+import {useAuth} from "@/state/hooks/useAuth";
+import {UserRole} from "@/state/api/types/api";
 import {AxiosError} from "axios";
 
 const Register = () => {

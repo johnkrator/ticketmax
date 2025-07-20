@@ -1,7 +1,7 @@
 import {create} from "zustand";
 import {persist} from "zustand/middleware";
 import {AxiosError} from "axios";
-import {api} from "../api/api.ts";
+import {api} from "@/state/api/api.ts";
 import type {
     ApiError,
     ApiResponse,
@@ -10,7 +10,7 @@ import type {
     ForgotPasswordDto,
     LoginDto,
     ResetPasswordDto, UpdateUserDto, User
-} from "@/api/types/api.ts";
+} from "@/state/api/types/api.ts";
 
 // Define the error response type locally to match api.ts
 interface AxiosErrorResponse {

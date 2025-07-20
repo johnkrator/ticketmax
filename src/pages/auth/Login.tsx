@@ -5,9 +5,9 @@ import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {toast} from "sonner";
-import {useAuth} from "@/hooks/useAuth";
+import {useAuth} from "@/state/hooks/useAuth";
 import {AxiosError} from "axios";
-import type {ApiError} from "@/api/types/api.ts";
+import type {ApiError} from "@/state/api/types/api.ts";
 
 // Define the error response type locally to avoid circular dependency
 interface AxiosErrorResponse {

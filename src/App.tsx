@@ -1,7 +1,7 @@
 import {TooltipProvider} from "@/components/ui/tooltip";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {RouterProvider} from "react-router-dom";
-import {EventsProvider} from "./contexts/EventsContext";
+import {EventsProvider} from "@/state/contexts/EventsContext";
 import Routes from "@/Routes";
 
 const queryClient = new QueryClient();
