@@ -26,7 +26,7 @@ export const EventsProvider = ({children}: { children: ReactNode }) => {
             image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=600&fit=crop",
             category: "Technology",
             attendees: "1.8K",
-            featured: false,
+            featured: true,
             description: "Discover the latest in tech innovation with industry leaders and pioneers."
         },
         {

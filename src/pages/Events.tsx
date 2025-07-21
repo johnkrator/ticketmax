@@ -114,24 +114,24 @@ const Events = () => {
                             {filteredEvents.map((event) => (
                                 <Card key={event.id}
                                       onClick={() => navigate(`/events/${event.id}`)}
-                                      className="bg-app-surface hover:bg-app-surface-hover transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 group cursor-pointer">
-                                    <div className="relative overflow-hidden rounded-t-lg">
+                                      className="bg-app-surface hover:bg-app-surface-hover transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 group cursor-pointer h-[37rem] flex flex-col overflow-hidden p-0">
+                                    <div className="relative h-56 w-full overflow-hidden flex-shrink-0">
                                         <img
                                             src={event.image}
                                             alt={event.title}
-                                            className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"
+                                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                                         />
                                         {event.featured && (
                                             <Badge
-                                                className="absolute top-3 right-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
+                                                className="absolute top-3 right-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white z-10">
                                                 Featured
                                             </Badge>
                                         )}
                                         <div
-                                            className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"/>
+                                            className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-[1]"/>
                                     </div>
 
-                                    <CardContent className="p-6">
+                                    <CardContent className="p-6 flex flex-col flex-1">
                                         <div className="mb-4">
                                             <Badge variant="secondary"
                                                    className="bg-purple-500/20 text-purple-300 mb-3">
