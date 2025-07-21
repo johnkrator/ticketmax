@@ -74,7 +74,7 @@ const Support = () => {
 
     return (
         <div
-            className="min-h-screen bg-app-gradient text-white relative overflow-hidden">
+            className="min-h-screen bg-app-background text-white relative overflow-hidden">
 
             <div className="relative z-10 py-20 px-4">
                 <div className="container mx-auto">

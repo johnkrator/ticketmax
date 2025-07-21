@@ -19,7 +19,7 @@ const EventDetails = () => {
     if (!event) {
         return (
             <div
-                className="min-h-screen bg-app-gradient text-white flex items-center justify-center">
+                className="min-h-screen bg-app-background text-white flex items-center justify-center">
                 <div className="text-center">
                     <h1 className="text-4xl font-bold mb-4">Event Not Found</h1>
                     <Link to="/events">
@@ -92,7 +92,7 @@ const EventDetails = () => {
 
     return (
         <div
-            className="min-h-screen bg-app-gradient text-white relative overflow-hidden">
+            className="min-h-screen bg-app-background text-white relative overflow-hidden">
 
             <div className="relative z-10 py-8 px-4">
                 <div className="container mx-auto">

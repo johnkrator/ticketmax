@@ -107,7 +107,7 @@ const BookingHistory = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-[#0a051a] via-[#1d1132] to-[#2d1b69] py-12">
+            <div className="min-h-screen bg-app-background py-12">
                 <div className="container mx-auto px-4 max-w-6xl">
                     <div className="flex justify-center items-center h-64">
                         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-400"></div>
@@ -118,7 +118,7 @@ const BookingHistory = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#0a051a] via-[#1d1132] to-[#2d1b69] py-12">
+        <div className="min-h-screen bg-app-background py-12">
             <div className="container mx-auto px-4 max-w-6xl">
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-white mb-2">Booking History</h1>

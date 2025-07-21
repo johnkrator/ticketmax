@@ -39,7 +39,7 @@ The foundation of the system uses CSS custom properties (variables) defined in t
 Custom Tailwind CSS utility classes for easy application:
 
 ```css
-.bg-app-gradient {
+.bg-app-background {
     background: var(--app-gradient);
 }
 
@@ -78,7 +78,7 @@ applyTheme('dark');
 
 ```tsx
 // Main gradient background
-<div className="bg-app-gradient">
+<div className="bg-app-background">
 
     // Glass effect surfaces
     <div className="bg-app-glass">
@@ -162,7 +162,7 @@ Replace hardcoded background styles with centralized classes:
 **After:**
 
 ```tsx
-<div className="bg-app-gradient">
+<div className="bg-app-background">
     <Card className="bg-app-glass">
 ```
 

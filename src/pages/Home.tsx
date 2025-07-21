@@ -6,7 +6,7 @@ import Testimonials from "@/components/Testimonials";
 const Home = () => {
     return (
         <div
-            className="min-h-screen bg-app-gradient text-white relative overflow-hidden">
+            className="min-h-screen bg-app-background text-white relative overflow-hidden">
             {/* Hero Section */}
             <HeroSection/>
 

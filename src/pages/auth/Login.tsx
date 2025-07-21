@@ -53,7 +53,7 @@ const Login = () => {
 
     return (
         <div
-            className="min-h-screen bg-app-gradient text-white relative overflow-hidden flex items-center justify-center">
+            className="min-h-screen bg-app-background text-white relative overflow-hidden flex items-center justify-center">
             <div className="relative z-10 w-full max-w-md px-4">
                 <Card className="bg-app-glass">
                     <CardHeader className="text-center">

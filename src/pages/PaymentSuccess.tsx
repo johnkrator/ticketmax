@@ -37,7 +37,7 @@ const PaymentSuccess = () => {
     useEffect(() => {
         // Redirect to dashboard after 15 seconds
         const timer = setTimeout(() => {
-            navigate("/dashboard");
+            navigate("/booking-history");
         }, 15000);
 
         return () => clearTimeout(timer);
@@ -45,7 +45,7 @@ const PaymentSuccess = () => {
 
     return (
         <div
-            className="min-h-screen bg-app-gradient text-white relative overflow-hidden">
+            className="min-h-screen bg-app-background text-white relative overflow-hidden">
 
             <div className="relative z-10 py-8 px-4">
                 <div className="container mx-auto max-w-4xl">
@@ -101,11 +101,11 @@ const PaymentSuccess = () => {
 
                     <div className="text-center">
                         <p className="text-gray-400 mb-4">
-                            Redirecting to your dashboard in 15 seconds...
+                            Redirecting to your history in 15 seconds...
                         </p>
-                        <Link to="/dashboard">
+                        <Link to="/booking-history">
                             <Button variant="ghost" className="text-purple-300 cursor-pointer hover:text-[#561888]">
-                                Go to Dashboard Now
+                                See booking history
                             </Button>
                         </Link>
                     </div>

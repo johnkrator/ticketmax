@@ -9,7 +9,7 @@ const VerificationPending: React.FC = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 py-8">
+        <div className="min-h-screen bg-app-background py-8">
             <div className="container mx-auto px-4">
                 <div className="max-w-2xl mx-auto">
                     <Card className="bg-white/10 backdrop-blur-md border-white/20">

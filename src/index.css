@@ -82,7 +82,7 @@
     --sidebar-ring: oklch(0.708 0 0);
 
     /* Custom app backgrounds */
-    --app-gradient: linear-gradient(to bottom right, rgb(15 23 42), rgb(88 28 135), rgb(15 23 42));
+    --app-gradient: #1d1132;
     --app-surface: rgb(255 255 255 / 0.05);
     --app-surface-hover: rgb(255 255 255 / 0.1);
     --app-glass: rgb(255 255 255 / 0.05);
@@ -142,7 +142,7 @@
 
 /* Custom background utility classes */
 @layer utilities {
-    .bg-app-gradient {
+    .bg-app-background {
         background: var(--app-gradient);
     }
 
