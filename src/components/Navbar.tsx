@@ -45,7 +45,7 @@ const Navbar = () => {
                                 to="/"
                                 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent flex-shrink-0"
                             >
-                                TicketProMax
+                                TicketMax
                             </Link>
 
                             {/* Desktop Navigation Links */}

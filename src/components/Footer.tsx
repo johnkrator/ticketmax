@@ -9,7 +9,7 @@ const Footer = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         <div className="sm:col-span-2 lg:col-span-1">
                             <h3 className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
-                                TicketProMax
+                                TicketMax
                             </h3>
                             <p className="text-gray-400">
                                 Your gateway to unforgettable experiences. Discover and book tickets for events
@@ -67,7 +67,7 @@ const Footer = () => {
                     </div>
 
                     <div className="border-t border-white/10 mt-8 pt-8 text-center text-gray-400">
-                        <p>&copy; {new Date().getFullYear()} TicketProMax. All rights reserved.</p>
+                        <p>&copy; {new Date().getFullYear()} TicketMax. All rights reserved.</p>
                     </div>
                 </div>
             </Container>
