@@ -26,6 +26,7 @@ import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card.tsx
 import {Progress} from "@/components/ui/progress.tsx";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.tsx";
 import {Alert, AlertDescription} from "@/components/ui/alert.tsx";
+import Container from "@/components/Container.tsx";
 
 interface OrganizerData {
     // Personal Information
@@ -787,72 +788,74 @@ const OrganizerOnboarding: React.FC = () => {
     return (
         <div
             className="min-h-screen bg-app-background text-white relative overflow-hidden flex items-center justify-center py-8">
-            <div className="relative z-10 w-full max-w-4xl px-4">
-                {/* Back to Login Link */}
-                <Link to="/auth/login"
-                      className="inline-flex items-center text-purple-300 hover:text-white mb-6 transition-colors">
-                    <ArrowLeft className="h-4 w-4 mr-2"/>
-                    Back to Login
-                </Link>
+            <Container>
+                <div className="relative z-10 w-full mx-auto max-w-4xl">
+                    {/* Back to Login Link */}
+                    <Link to="/auth/login"
+                          className="inline-flex items-center text-purple-300 hover:text-white mb-6 transition-colors">
+                        <ArrowLeft className="h-4 w-4 mr-2"/>
+                        Back to Login
+                    </Link>
 
-                <Card className="bg-app-glass">
-                    <CardHeader className="text-center pb-6">
-                        <div className="mb-4">
-                            <Link to="/"
-                                  className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent inline-block">
-                                TicketVerse
-                            </Link>
-                        </div>
-                        <CardTitle className="text-3xl font-bold text-white mb-2">Become an Organizer</CardTitle>
-                        <p className="text-gray-400">Complete your profile to start creating amazing events</p>
-
-                        {/* Progress Indicator */}
-                        <div className="mt-6">
-                            <div className="flex justify-between items-center mb-2">
-                                <span className="text-sm text-gray-400">Step {currentStep} of {totalSteps}</span>
-                                <span className="text-sm text-gray-400">{Math.round(progress)}% Complete</span>
+                    <Card className="bg-app-glass">
+                        <CardHeader className="text-center pb-6">
+                            <div className="mb-4">
+                                <Link to="/"
+                                      className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent inline-block">
+                                    TicketVerse
+                                </Link>
                             </div>
-                            <Progress value={progress} className="h-2"/>
-                        </div>
-                    </CardHeader>
+                            <CardTitle className="text-3xl font-bold text-white mb-2">Become an Organizer</CardTitle>
+                            <p className="text-gray-400">Complete your profile to start creating amazing events</p>
 
-                    <CardContent className="px-8 pb-8">
-                        {renderStep()}
+                            {/* Progress Indicator */}
+                            <div className="mt-6">
+                                <div className="flex justify-between items-center mb-2">
+                                    <span className="text-sm text-gray-400">Step {currentStep} of {totalSteps}</span>
+                                    <span className="text-sm text-gray-400">{Math.round(progress)}% Complete</span>
+                                </div>
+                                <Progress value={progress} className="h-2"/>
+                            </div>
+                        </CardHeader>
 
-                        <div className="flex justify-between mt-8 pt-6 border-t border-white/10">
-                            <Button
-                                variant="outline"
-                                onClick={handlePrevious}
-                                disabled={currentStep === 1}
-                                className="flex items-center gap-2 border-white/30 text-white hover:bg-white/10 disabled:opacity-50"
-                            >
-                                <ArrowLeft className="h-4 w-4"/>
-                                Previous
-                            </Button>
+                        <CardContent className="px-8 pb-8">
+                            {renderStep()}
 
-                            {currentStep < totalSteps ? (
+                            <div className="flex justify-between mt-8 pt-6 border-t border-white/10">
                                 <Button
-                                    onClick={handleNext}
-                                    disabled={!validateStep(currentStep)}
-                                    className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:opacity-50"
+                                    variant="outline"
+                                    onClick={handlePrevious}
+                                    disabled={currentStep === 1}
+                                    className="flex items-center gap-2 border-white/30 text-white hover:bg-white/10 disabled:opacity-50"
                                 >
-                                    Next
-                                    <ArrowRight className="h-4 w-4"/>
+                                    <ArrowLeft className="h-4 w-4"/>
+                                    Previous
                                 </Button>
-                            ) : (
-                                <Button
-                                    onClick={handleSubmit}
-                                    disabled={!validateStep(currentStep) || isSubmitting}
-                                    className="flex items-center gap-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 disabled:opacity-50"
-                                >
-                                    {isSubmitting ? "Submitting..." : "Complete Application"}
-                                    <CheckCircle className="h-4 w-4"/>
-                                </Button>
-                            )}
-                        </div>
-                    </CardContent>
-                </Card>
-            </div>
+
+                                {currentStep < totalSteps ? (
+                                    <Button
+                                        onClick={handleNext}
+                                        disabled={!validateStep(currentStep)}
+                                        className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:opacity-50"
+                                    >
+                                        Next
+                                        <ArrowRight className="h-4 w-4"/>
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        onClick={handleSubmit}
+                                        disabled={!validateStep(currentStep) || isSubmitting}
+                                        className="flex items-center gap-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 disabled:opacity-50"
+                                    >
+                                        {isSubmitting ? "Submitting..." : "Complete Application"}
+                                        <CheckCircle className="h-4 w-4"/>
+                                    </Button>
+                                )}
+                            </div>
+                        </CardContent>
+                    </Card>
+                </div>
+            </Container>
         </div>
     );
 };
