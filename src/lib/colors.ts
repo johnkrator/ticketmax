@@ -1,7 +1,6 @@
 /**
- * Centralized color configuration for the TicketMax app
- * This file provides programmatic access to CSS custom properties
- * for consistent color usage across components
+ * Centralized color configuration for the app
+ * This provides consistent theming and easy brand updates
  */
 
 export const colors = {

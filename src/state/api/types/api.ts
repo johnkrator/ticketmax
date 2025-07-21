@@ -70,3 +70,16 @@ export interface ApiError {
     statusCode: number;
     error?: string;
 }
+
+// Ticket-related interfaces
+export interface UserTicket {
+    id: number;
+    eventTitle: string;
+    date: string;
+    location: string;
+    ticketType: string;
+    quantity: number;
+    status: string;
+    ticketNumber: string;
+    qrData: string;
+}

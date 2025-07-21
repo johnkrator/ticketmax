@@ -1,14 +1,5 @@
-interface UserTicket {
-    id: number;
-    eventTitle: string;
-    date: string;
-    location: string;
-    ticketType: string;
-    quantity: number;
-    status: string;
-    ticketNumber: string;
-    qrData: string;
-}
+import type {UserTicket} from "@/state/api/types/api";
+import {BRAND_NAME} from "@/config/brand";
 
 export class TicketTemplate {
     // Generate ticket as canvas for JPEG/PDF conversion
@@ -135,7 +126,7 @@ export class TicketTemplate {
                 ctx.font = "bold 20px Arial, sans-serif";
                 ctx.fillStyle = "#667eea";
                 ctx.textAlign = "center";
-                ctx.fillText("TicketMax", canvas.width / 2, footerY);
+                ctx.fillText(BRAND_NAME, canvas.width / 2, footerY);
 
                 // Footer text
                 ctx.font = "13px Arial, sans-serif";
@@ -388,7 +379,7 @@ export class TicketTemplate {
                   </div>
               </div>
               <div class="footer">
-                  <div class="footer-brand">TicketMax</div>
+                  <div class="footer-brand">${BRAND_NAME}</div>
                   <div class="footer-text">
                       Digital Ticket Platform<br>
                       Keep this ticket safe and present it at the event entrance
